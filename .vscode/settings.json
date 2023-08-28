@@ -1,0 +1,6 @@
+{
+    "editor.codeActionsOnSave": {
+        "souce.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"]
+}
