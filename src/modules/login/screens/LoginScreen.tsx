@@ -12,10 +12,10 @@ import {
   LimitedContainer,
   TitleLogin,
 } from '../styles/loginScreen.styles';
+import { UserType } from '../types/UserType';
 
 const LoginScreen = () => {
   const { accessToken, setAccessToken } = useGlobalContext();
-
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const { postRequest, loading } = useRequests();
@@ -27,14 +27,13 @@ const LoginScreen = () => {
     setSenha(event.target.value);
   };
 
-  const handleLogin = () => {
-    setAccessToken('novo token');
-    postRequest('http://localhost:3000/auth/login', {
+  const handleLogin = async () => {
+    const user = await postRequest<UserType>('http://localhost:3000/auth/login', {
       email: email,
       senha: senha,
     });
 
-    console.log('email', `${email}`, 'senha', `${senha}`);
+    setAccessToken(user?.accessToken || '');
   };
 
   return (
