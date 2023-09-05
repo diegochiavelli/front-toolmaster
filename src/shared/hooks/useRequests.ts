@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom';
 
-import { CollaboratorRoutesEnum } from '../../modules/collaborator/routes';
+import { FirstScreenRoutesEnum } from '../../modules/firstScreen/routes';
 import { AuthType } from '../../modules/login/types/AuthType';
 import { ERROR_INVALID_PASSWORD } from '../constants/errorsStatus';
 import { URL_AUTH } from '../constants/urls';
@@ -26,7 +26,6 @@ export const useRequests = () => {
 
     const returnObject: T | undefined = await ConnectionAPI.connect<T>(url, method, body)
       .then((result) => {
-        // alert('PASSEI AQUI NO REQUEST COLLABORATOR 1');
         if (saveGlobal) {
           saveGlobal(result);
         }
@@ -34,28 +33,25 @@ export const useRequests = () => {
       })
       .catch((error: Error) => {
         setNotification(error.message, 'error');
-        //  alert('PASSEI AQUI NO REQUEST ERROR CATCH COLLABORATOR 2 ');
         return undefined;
       });
 
     setLoading(false);
+
     return returnObject;
   };
 
-  const authRequest = async (body: unknown): Promise<void> => {
-    const navigate = useNavigate();
-    // alert('AUTH REQUEST EM USE REQUESTS');
+  const authRequest = async (navigate: NavigateFunction, body: unknown): Promise<void> => {
     setLoading(true);
+
     await connectionAPIPost<AuthType>(URL_AUTH, body)
       .then((result) => {
-        //  alert('ENTREI NO THEN DO AUTH REQUEST');
         setUser(result.user);
         setAuthorizationToken(result.accessToken);
-        navigate(CollaboratorRoutesEnum.COLLABORATOR);
+        navigate(FirstScreenRoutesEnum.FIRST_SCREEN);
         return result;
       })
       .catch(() => {
-        //   alert('ERRO AUTH REQUEST');
         setNotification(ERROR_INVALID_PASSWORD, 'error');
         return undefined;
       });

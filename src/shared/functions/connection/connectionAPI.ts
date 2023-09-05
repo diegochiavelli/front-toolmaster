@@ -8,7 +8,6 @@ export type MethodType = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 export default class ConnectionAPI {
   static async call<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
-    // alert('ConnectionAPI CONFIG HEADERS');
     const config: AxiosRequestConfig = {
       headers: {
         Authorization: getAuthorizationToken(),
@@ -19,27 +18,22 @@ export default class ConnectionAPI {
       case MethodsEnum.POST:
       case MethodsEnum.PUT:
       case MethodsEnum.PATCH:
-        // alert('ConnectionAPI METHODS POST PUT PATCH');
         return (await axios[method]<T>(url, body, config)).data;
       case MethodsEnum.GET:
       case MethodsEnum.DELETE:
       default:
-        // alert('ConnectionAPI METHODS GET DELETE');
         return (await axios[method]<T>(url, config)).data;
     }
   }
 
   static async connect<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
     return ConnectionAPI.call<T>(url, method, body).catch((error) => {
-      //  alert('ERROR NO CONNECT + CALL');
       if (error.response) {
         switch (error.response.status) {
           case 401:
           case 403:
-            //   alert('ERROR NO CONNECT + CALL - SEM PERMISSÃO');
             throw new Error(ERROR_ACCESS_DANIED);
           default:
-            //   alert('ERROR NO CONNECT + CALL - ERRO CONEXÃO');
             throw new Error(ERROR_CONNECTION);
         }
       }
@@ -49,7 +43,7 @@ export default class ConnectionAPI {
 }
 
 export const connectionAPIGet = async <T>(url: string): Promise<T> => {
-  alert('connectionAPIGet');
+  //alert('connectionAPIGet');
   return ConnectionAPI.connect<T>(url, MethodsEnum.GET);
 };
 
@@ -59,7 +53,7 @@ export const connectionAPIDelete = async <T>(url: string): Promise<T> => {
 };
 
 export const connectionAPIPost = async <T>(url: string, body: unknown): Promise<T> => {
-  alert('connectionAPIPost');
+  //alert('connectionAPIPost');
   return ConnectionAPI.connect<T>(url, MethodsEnum.POST, body);
 };
 
