@@ -8,6 +8,7 @@ export type MethodType = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 export default class ConnectionAPI {
   static async call<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
+    alert('PEGANDO CONFIG HEADERS');
     const config: AxiosRequestConfig = {
       headers: {
         Authorization: getAuthorizationToken(),
@@ -29,6 +30,7 @@ export default class ConnectionAPI {
   static async connect<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
     return ConnectionAPI.call<T>(url, method, body).catch((error) => {
       if (error.response) {
+        alert('ERRO CONNECT + CALL');
         switch (error.response.status) {
           case 401:
           case 403:
@@ -43,7 +45,7 @@ export default class ConnectionAPI {
 }
 
 export const connectionAPIGet = async <T>(url: string): Promise<T> => {
-  //alert('connectionAPIGet');
+  alert('connectionAPIGet');
   return ConnectionAPI.connect<T>(url, MethodsEnum.GET);
 };
 

@@ -8,8 +8,8 @@ import Screen from '../../../shared/components/screen/Screen';
 import Table from '../../../shared/components/table/Table';
 import { URL_COLLABORATOR } from '../../../shared/constants/urls';
 import { MethodsEnum } from '../../../shared/enums/methods.enum';
-import { useDataContext } from '../../../shared/hooks/useDataContext';
 import { useRequests } from '../../../shared/hooks/useRequests';
+import { useCollaboratorReducer } from '../../../store/reducers/collaboratorReducer/useCollaboratorReducer';
 import { CollaboratorRoutesEnum } from '../routes';
 import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../styles/collaborator.style';
 import { CollaboratorType } from '../types/CollaboratorType';
@@ -45,7 +45,8 @@ const columns: ColumnsType<CollaboratorType> = [
 ];
 
 const Collaborator = () => {
-  const { collaborators, setCollaborators } = useDataContext();
+  const { collaborators, setCollaborators } = useCollaboratorReducer();
+
   const [collaboratorsFiltered, setCollaboratorsFiltered] = useState<CollaboratorType[]>([]);
   const { request } = useRequests();
   const navigate = useNavigate();

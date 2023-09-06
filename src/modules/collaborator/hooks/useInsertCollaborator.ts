@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { URL_COLLABORATOR } from '../../../shared/constants/urls';
 import { InsertCollaborator } from '../../../shared/dtos/InsertCollaborator.dto';
 import { connectionAPIPost } from '../../../shared/functions/connection/connectionAPI';
-import { useGlobalContext } from '../../../shared/hooks/useGlobalContext';
+import { useGlobalReducer } from '../../../store/reducers/globalReducer/useGlobalReducer';
 import { CollaboratorRoutesEnum } from '../routes';
 
 export const useInsertCollaborator = () => {
   const navigate = useNavigate();
-  const { setNotification } = useGlobalContext();
+  const { setNotification } = useGlobalReducer();
   const [loading, setLoading] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
   const [collaborator, setCollaborator] = useState<InsertCollaborator>({
