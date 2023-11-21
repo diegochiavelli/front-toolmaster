@@ -1,5 +1,4 @@
 import {
-  FileSearchOutlined,
   HomeOutlined,
   InteractionOutlined,
   ToolOutlined,
@@ -12,6 +11,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CollaboratorRoutesEnum } from '../../../modules/collaborator/routes';
+import { DashboardRoutesEnum } from '../../../modules/dashboard/routes';
+import { EntryRoutesEnum } from '../../../modules/entry/routes';
+import { EquipmentRoutesEnum } from '../../../modules/equipment/routes';
+import { ExiteRoutesEnum } from '../../../modules/exite/routes';
+import { LoanRoutesEnum } from '../../../modules/loan/routes';
+import { UserRoutesEnum } from '../../../modules/user/routes';
 import { ContainerLogoName, ContainerMenu, LogoMenu, NameCompany } from './menu.style';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -25,21 +30,39 @@ const Menu = () => {
       key: 'home',
       label: 'Principal',
       icon: <HomeOutlined />,
+      onClick: () => navigate(DashboardRoutesEnum.DASHBOARD),
     },
     {
       key: 'collaborators',
       label: 'Colaboradores',
       icon: <UsergroupAddOutlined />,
+      onClick: () => navigate(CollaboratorRoutesEnum.COLLABORATOR),
+    },
+    {
+      key: 'loan',
+      label: 'Empréstimos',
+      icon: <InteractionOutlined />,
+      onClick: () => navigate(LoanRoutesEnum.LOAN),
+    },
+    {
+      key: 'equipments',
+      label: 'Equipamentos',
+      icon: <ToolOutlined />,
       children: [
         {
-          key: 'collaborators_view',
-          label: 'Visualizar',
-          onClick: () => navigate(CollaboratorRoutesEnum.COLLABORATOR),
+          key: 'estoque',
+          label: 'Estoque',
+          onClick: () => navigate(EquipmentRoutesEnum.EQUIPMENT),
         },
         {
-          key: 'collaborators_insert',
-          label: 'Adicionar',
-          onClick: () => navigate(CollaboratorRoutesEnum.COLLABORATOR_INSERT),
+          key: 'entry',
+          label: 'Entradas',
+          onClick: () => navigate(EntryRoutesEnum.ENTRY),
+        },
+        {
+          key: 'exite',
+          label: 'Saídas',
+          onClick: () => navigate(ExiteRoutesEnum.EXITE),
         },
       ],
     },
@@ -47,33 +70,7 @@ const Menu = () => {
       key: 'users',
       label: 'Usuários',
       icon: <UserOutlined />,
-      children: [
-        {
-          key: 'users_view',
-          label: 'Visualizar',
-          onClick: () => null,
-        },
-        {
-          key: 'users_insert',
-          label: 'Adicionar',
-          onClick: () => null,
-        },
-      ],
-    },
-    {
-      key: 'equipments',
-      label: 'Equipamentos',
-      icon: <ToolOutlined />,
-    },
-    {
-      key: 'loan',
-      label: 'Empréstimos',
-      icon: <InteractionOutlined />,
-    },
-    {
-      key: 'reports',
-      label: 'Relatórios',
-      icon: <FileSearchOutlined />,
+      onClick: () => navigate(UserRoutesEnum.USER),
     },
   ];
 

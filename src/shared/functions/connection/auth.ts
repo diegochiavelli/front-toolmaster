@@ -20,17 +20,17 @@ export const getAuthorizationToken = () => getItemStorage(AUTHORIZATION_KEY);
 export const verifyLoggedIn = async () => {
   const token = getAuthorizationToken();
   if (!token) {
-    alert('verifyLoggedIn SEM TOKEN');
+    // alert('Usuário não encontrado!');
     return redirect(LoginRoutesEnum.LOGIN);
   }
   const user = await connectionAPIGet<UserType>(URL_USER).catch(() => {
-    //unsetAuthorizationToken();
-    alert('verifyLoggedIn user ERRO APIGET');
+    unsetAuthorizationToken();
+    // alert('Usuário não encontrado!');
   });
 
   if (!user) {
-    alert('verifyLoggedIn CONST USER FAKE');
-    //return redirect(LoginRoutesEnum.LOGIN);
+    // alert('Usuário não encontrado!');
+    return redirect(LoginRoutesEnum.LOGIN);
   }
   return null;
 };

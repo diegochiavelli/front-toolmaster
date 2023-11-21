@@ -1,17 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Input from '../../../shared/components/inputs/input/Input';
 import Screen from '../../../shared/components/screen/Screen';
 import { DisplayFlexJustifyRight } from '../../../shared/components/styles/display.styled';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styled';
+import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { useInsertCollaborator } from '../hooks/useInsertCollaborator';
 import { CollaboratorRoutesEnum } from '../routes';
 import { CollaboratorInsertContainer } from '../styles/collaboratorInsert.style';
 
 const CollaboratorInsert = () => {
-  const { collaborator, loading, disabledButton, onChangeInput, handleInsertCollaborator } =
-    useInsertCollaborator();
+  const { collaboratorId } = useParams<{ collaboratorId: string }>();
+  const { collaborator, loading, disabledButton, isEdit, onChangeInput, handleInsertCollaborator } =
+    useInsertCollaborator(collaboratorId);
 
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ const CollaboratorInsert = () => {
       listBreadcrumb={[
         {
           name: 'HOME',
+          navigateTo: DashboardRoutesEnum.DASHBOARD,
         },
         {
           name: 'COLABORADORES',
@@ -44,6 +47,7 @@ const CollaboratorInsert = () => {
             placeholder="Nome"
           />
           <Input
+            type="number"
             onChange={(event) => onChangeInput(event, 'cpf')}
             value={collaborator.cpf}
             margin="0px 0px 16px 0px"
@@ -51,6 +55,7 @@ const CollaboratorInsert = () => {
             placeholder="CPF"
           />
           <Input
+            type="number"
             onChange={(event) => onChangeInput(event, 'telefone')}
             value={collaborator.telefone}
             margin="0px 0px 16px 0px"
@@ -58,18 +63,11 @@ const CollaboratorInsert = () => {
             placeholder="Telefone"
           />
           <Input
-            onChange={(event) => onChangeInput(event, 'assinatura')}
-            value={collaborator.assinatura}
+            onChange={(event) => onChangeInput(event, 'cargo')}
+            value={collaborator.cargo}
             margin="0px 0px 16px 0px"
-            title="Assinatura"
-            placeholder="Assinatura"
-          />
-          <Input
-            onChange={(event) => onChangeInput(event, 'observacao')}
-            value={collaborator.observacao}
-            margin="0px 0px 16px 0px"
-            title="Observação"
-            placeholder="Observação"
+            title="Cargo"
+            placeholder="Cargo"
           />
           <DisplayFlexJustifyRight>
             <LimitedContainer margin="0px 8px" width={120}>
@@ -84,7 +82,7 @@ const CollaboratorInsert = () => {
                 onClick={handleInsertCollaborator}
                 type="primary"
               >
-                Adicionar
+                {isEdit ? 'Salvar' : 'Adicionar'}
               </Button>
             </LimitedContainer>
           </DisplayFlexJustifyRight>

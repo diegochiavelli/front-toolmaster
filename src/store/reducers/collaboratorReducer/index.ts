@@ -4,10 +4,12 @@ import { CollaboratorType } from '../../../modules/collaborator/types/Collaborat
 
 interface CollaboratorState {
   collaborators: CollaboratorType[];
+  collaborator?: CollaboratorType;
 }
 
 const initialState: CollaboratorState = {
   collaborators: [],
+  collaborator: undefined,
 };
 
 export const counterSlice = createSlice({
@@ -17,9 +19,12 @@ export const counterSlice = createSlice({
     setCollaboratorsAction: (state, action: PayloadAction<CollaboratorType[]>) => {
       state.collaborators = action.payload;
     },
+    setCollaboratorAction: (state, action: PayloadAction<CollaboratorType | undefined>) => {
+      state.collaborator = action.payload;
+    },
   },
 });
 
-export const { setCollaboratorsAction } = counterSlice.actions;
+export const { setCollaboratorsAction, setCollaboratorAction } = counterSlice.actions;
 
 export default counterSlice.reducer;

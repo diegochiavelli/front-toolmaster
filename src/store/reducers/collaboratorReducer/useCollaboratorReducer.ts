@@ -2,18 +2,24 @@ import { useDispatch } from 'react-redux';
 
 import { CollaboratorType } from '../../../modules/collaborator/types/CollaboratorType';
 import { useAppSelector } from '../../hooks';
-import { setCollaboratorsAction } from '.';
+import { setCollaboratorAction, setCollaboratorsAction } from '.';
 
 export const useCollaboratorReducer = () => {
   const dispatch = useDispatch();
-  const { collaborators } = useAppSelector((state) => state.collaboratorReducer);
+  const { collaborators, collaborator } = useAppSelector((state) => state.collaboratorReducer);
 
-  const setCollaborators = (collaborators: CollaboratorType[]) => {
-    dispatch(setCollaboratorsAction(collaborators));
+  const setCollaborators = (currentCollaborators: CollaboratorType[]) => {
+    dispatch(setCollaboratorsAction(currentCollaborators));
+  };
+
+  const setCollaborator = (currentCollaborator?: CollaboratorType) => {
+    dispatch(setCollaboratorAction(currentCollaborator));
   };
 
   return {
+    collaborator,
     collaborators,
     setCollaborators,
+    setCollaborator,
   };
 };

@@ -28,7 +28,7 @@ export const ContainerLogin = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #d9d9d9;
-  padding: 22px;
+  /* padding: 22px; */
   width: 100%;
   height: 100vh;
   max-width: 646px;

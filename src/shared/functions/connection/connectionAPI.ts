@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-import { ERROR_ACCESS_DANIED, ERROR_CONNECTION } from '../../constants/errorsStatus';
+import { ERROR_ACCESS_DANIED, ERROR_CONNECTION, ERROR_QUANT } from '../../constants/errorsStatus';
 import { MethodsEnum } from '../../enums/methods.enum';
 import { getAuthorizationToken } from './auth';
 
@@ -8,7 +8,6 @@ export type MethodType = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 export default class ConnectionAPI {
   static async call<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
-    alert('PEGANDO CONFIG HEADERS');
     const config: AxiosRequestConfig = {
       headers: {
         Authorization: getAuthorizationToken(),
@@ -30,11 +29,12 @@ export default class ConnectionAPI {
   static async connect<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
     return ConnectionAPI.call<T>(url, method, body).catch((error) => {
       if (error.response) {
-        alert('ERRO CONNECT + CALL');
         switch (error.response.status) {
           case 401:
           case 403:
             throw new Error(ERROR_ACCESS_DANIED);
+          case 502:
+            throw new Error(ERROR_QUANT);
           default:
             throw new Error(ERROR_CONNECTION);
         }
@@ -45,17 +45,14 @@ export default class ConnectionAPI {
 }
 
 export const connectionAPIGet = async <T>(url: string): Promise<T> => {
-  alert('connectionAPIGet');
   return ConnectionAPI.connect<T>(url, MethodsEnum.GET);
 };
 
 export const connectionAPIDelete = async <T>(url: string): Promise<T> => {
-  alert('connectionAPIDelete');
   return ConnectionAPI.connect<T>(url, MethodsEnum.DELETE);
 };
 
 export const connectionAPIPost = async <T>(url: string, body: unknown): Promise<T> => {
-  //alert('connectionAPIPost');
   return ConnectionAPI.connect<T>(url, MethodsEnum.POST, body);
 };
 

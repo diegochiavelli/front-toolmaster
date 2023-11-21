@@ -3,7 +3,5 @@ export interface CollaboratorType {
   nome: string;
   cpf: string;
   telefone: string;
-  assinatura: string;
-  observacao: string;
-  status: boolean;
+  cargo: string;
 }
