@@ -43,27 +43,52 @@ const LoanDetail = () => {
               {loan.emprestimo?.id}
             </Descriptions.Item>
             <Descriptions.Item label="Data saída">
-              {moment(loan.dataSaida).format('DD-MM-YYYY')}
+              {moment(loan.emprestimo?.dataSaida).format('DD-MM-YYYY')}
             </Descriptions.Item>
             <Descriptions.Item label="Data devolução" span={2}>
-              {moment(loan.dataDevolucao).format('DD-MM-YYYY')}
+              {moment(loan.emprestimo?.dataDevolucao).format('DD-MM-YYYY')}
             </Descriptions.Item>
             <Descriptions.Item label="Observação">{loan.emprestimo?.observacao} </Descriptions.Item>
             <Descriptions.Item label="Status">{loan.emprestimo?.status}</Descriptions.Item>
           </Descriptions>
           <Divider />
-          <Descriptions title="Dados do item" bordered>
+          <Descriptions title="Item" bordered>
             {loan.item?.map((item) => (
               <>
+                <Divider />
+                <Divider />
+                <Divider />
                 <Descriptions.Item label="ID equipamento">{item.id_equipamento}</Descriptions.Item>
-                <Descriptions.Item label="Quantidade" span={2}>
+                <Descriptions.Item label="Quantidade" span={1}>
                   {item.quantidade}
                 </Descriptions.Item>
+                <Descriptions.Item label="Nome">
+                  {loan.equipamento?.map((test) => {
+                    if (test.id == item.id_equipamento) {
+                      return test.nome;
+                    }
+                  })}
+                </Descriptions.Item>
+                <Descriptions.Item label="Modelo">
+                  {loan.equipamento?.map((test) => {
+                    if (test.id == item.id_equipamento) {
+                      return test.modelo;
+                    }
+                  })}
+                </Descriptions.Item>
+                <Descriptions.Item label="Marca">
+                  {loan.equipamento?.map((test) => {
+                    if (test.id == item.id_equipamento) {
+                      return test.marca;
+                    }
+                  })}
+                </Descriptions.Item>
+                <Divider />
               </>
             ))}
           </Descriptions>
           <Divider />
-          <Descriptions title="Dados do colaborador" bordered>
+          <Descriptions title="Colaborador" bordered>
             <Descriptions.Item label="ID colaborador" span={4}>
               {loan.colaborador?.id}
             </Descriptions.Item>
@@ -78,15 +103,30 @@ const LoanDetail = () => {
 
       <Divider />
       <BoxButtons2>
-        <LimiteSizeButton>
-          <Button
-            margin="0px 16px 0px 0px"
-            onClick={() => handleChangeStatusLoan(loan?.emprestimo?.id ?? 0)}
-            icon={<CheckOutlined />}
-          >
-            Concluir
-          </Button>
-        </LimiteSizeButton>
+        {loan?.emprestimo && loan?.emprestimo.status == 'Pendente' && (
+          <LimiteSizeButton>
+            <Button
+              margin="0px 16px 0px 0px"
+              onClick={() => handleChangeStatusLoan(loan?.emprestimo?.id ?? 0)}
+              icon={<CheckOutlined />}
+            >
+              Concluir
+            </Button>
+          </LimiteSizeButton>
+        )}
+
+        {loan?.emprestimo && loan?.emprestimo.status == 'Vencido' && (
+          <LimiteSizeButton>
+            <Button
+              margin="0px 16px 0px 0px"
+              onClick={() => handleChangeStatusLoan(loan?.emprestimo?.id ?? 0)}
+              icon={<CheckOutlined />}
+            >
+              Concluir
+            </Button>
+          </LimiteSizeButton>
+        )}
+
         <LimiteSizeButton>
           <Button
             type="primary"

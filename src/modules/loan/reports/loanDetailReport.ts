@@ -52,6 +52,9 @@ function loanDetailPDF(loan: LoanType[]) {
     return [
       d.item?.map((f) => ({ text: f.id_equipamento, fontSize: 9, margin: [0, 2, 0, 2] })),
       d.item?.map((f) => ({ text: f.quantidade, fontSize: 9, margin: [0, 2, 0, 2] })),
+      d.equipamento?.map((i) => ({ text: i.nome, fontSize: 9, margin: [0, 2, 0, 2] })),
+      d.equipamento?.map((i) => ({ text: i.marca, fontSize: 9, margin: [0, 2, 0, 2] })),
+      d.equipamento?.map((i) => ({ text: i.modelo, fontSize: 9, margin: [0, 2, 0, 2] })),
     ];
   });
 
@@ -60,7 +63,7 @@ function loanDetailPDF(loan: LoanType[]) {
       layout: 'lightHorizontalLines',
       table: {
         headerRows: 1,
-        widths: ['*', '*'],
+        widths: ['*', '*', '*', '*', '*'],
         body: [
           [
             {
@@ -77,12 +80,35 @@ function loanDetailPDF(loan: LoanType[]) {
               fontSize: 11,
               bold: true,
             },
+            {
+              text: 'Nome equipamento',
+              style: 'tableHeader',
+              margin: [0, 20, 0, 0],
+              fontSize: 11,
+              bold: true,
+            },
+            {
+              text: 'Marca',
+              style: 'tableHeader',
+              margin: [0, 20, 0, 0],
+              fontSize: 11,
+              bold: true,
+            },
+            {
+              text: 'Modelo',
+              style: 'tableHeader',
+              margin: [0, 20, 0, 0],
+              fontSize: 11,
+              bold: true,
+            },
           ],
           ...dadosItem,
         ],
       },
     },
   ];
+
+
 
   const dadosColaborador = loan.map((g) => {
     return [

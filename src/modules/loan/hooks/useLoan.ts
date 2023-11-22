@@ -5,9 +5,9 @@ import { URL_LOAN, URL_LOAN_CONCLUDE, URL_LOAN_ID } from '../../../shared/consta
 import { MethodsEnum } from '../../../shared/enums/methods.enum';
 import { useRequests } from '../../../shared/hooks/useRequests';
 import { useLoanReducer } from '../../../store/reducers/loanReducer/useLoanReducer';
+import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { LoanRoutesEnum } from '../routes';
 import { LoanType } from '../types/LoanType';
-import { DashboardRoutesEnum } from '../../dashboard/routes';
 
 export const useLoan = () => {
   const [loanIdDelete, setLoanIdDelete] = useState<number | undefined>();
