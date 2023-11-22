@@ -11,7 +11,6 @@ function collaboratorPDF(collaboratorsFiltered: CollaboratorType[]) {
 
   const dados = collaboratorsFiltered.map((e) => {
     return [
-
       { text: e.id, fontSize: 9, margin: [0, 2, 0, 2] },
       { text: e.nome, fontSize: 9, margin: [0, 2, 0, 2] },
       { text: insertMaskInCpf(e.cpf), fontSize: 9, margin: [0, 2, 0, 2] },

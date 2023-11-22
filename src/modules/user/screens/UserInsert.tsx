@@ -5,10 +5,10 @@ import Input from '../../../shared/components/inputs/input/Input';
 import Screen from '../../../shared/components/screen/Screen';
 import { DisplayFlexJustifyRight } from '../../../shared/components/styles/display.styled';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styled';
+import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { useInsertUser } from '../hooks/useInsertUser';
 import { UserRoutesEnum } from '../routes';
 import { UserInsertContainer } from '../styles/userInsert.style';
-import { DashboardRoutesEnum } from '../../dashboard/routes';
 
 const UserInsert = () => {
   const { userId } = useParams<{ userId: string }>();

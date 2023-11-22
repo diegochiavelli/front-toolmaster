@@ -1,3 +1,6 @@
+import { CollaboratorType } from '../../collaborator/types/CollaboratorType';
+import { LoanEquipmentType } from './LoanEquipmentType';
+
 export interface LoanType {
   id: number;
   dataSaida: string;
@@ -6,5 +9,7 @@ export interface LoanType {
   status: string;
   id_usuario: number;
   id_funcionario: number;
+  emprestimo?: LoanType;
+  item?: LoanEquipmentType[];
+  colaborador?: CollaboratorType;
 }
-

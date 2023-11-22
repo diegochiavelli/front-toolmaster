@@ -31,7 +31,8 @@ export const useUser = () => {
     if (!value) {
       setUsersFiltered([...users]);
     } else {
-      setUsersFiltered([...usersFiltered.filter((user) => user.nome.includes(value)),
+      setUsersFiltered([
+        ...usersFiltered.filter((user) => user.nome.includes(value)),
         ...usersFiltered.filter((user) => user.id.toString().includes(value)),
       ]);
     }

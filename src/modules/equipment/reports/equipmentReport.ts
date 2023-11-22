@@ -4,7 +4,6 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 import { EquipmentType } from '../type/EquipmentType';
 
-
 function equipmentPDF(equipmentsFiltered: EquipmentType[]) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 

@@ -7,6 +7,7 @@ import { useRequests } from '../../../shared/hooks/useRequests';
 import { useLoanReducer } from '../../../store/reducers/loanReducer/useLoanReducer';
 import { LoanRoutesEnum } from '../routes';
 import { LoanType } from '../types/LoanType';
+import { DashboardRoutesEnum } from '../../dashboard/routes';
 
 export const useLoan = () => {
   const [loanIdDelete, setLoanIdDelete] = useState<number | undefined>();
@@ -58,6 +59,8 @@ export const useLoan = () => {
         'Empréstimo concluído!',
       );
       await request<LoanType[]>(URL_LOAN, MethodsEnum.GET, setLoans);
+
+      navigate(DashboardRoutesEnum.DASHBOARD);
     }
   };
 

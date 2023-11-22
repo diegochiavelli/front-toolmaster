@@ -18,6 +18,8 @@ export const URL_LOAN_EQUIPMENT_ID =
   'http://localhost:3000/emprestimosequipamentos/{emprestimosId}';
 export const URL_LOAN_CONCLUDE = 'http://localhost:3000/emprestimosconcluir/{emprestimosId}';
 
+export const URL_LOAN_DETAIL_ID = 'http://localhost:3000/emprestimosequipamentos/{emprestimosId}';
+
 export const URL_ENTRY = 'http://localhost:3000/entradas';
 export const URL_ENTRY_ID = 'http://localhost:3000/entradas/{entradasId}';
 

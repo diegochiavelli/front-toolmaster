@@ -3,6 +3,7 @@ import { Input, Modal } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
@@ -10,6 +11,7 @@ import Table from '../../../shared/components/table/Table';
 import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { useLoan } from '../hooks/useLoan';
 import loanPDF from '../reports/loanReport';
+import { LoanRoutesEnum } from '../routes';
 import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../styles/loan.style';
 import { LoanType } from '../types/LoanType';
 
@@ -27,6 +29,8 @@ const Loan = () => {
     handleOpenModalDelete,
     handleChangeStatusLoan,
   } = useLoan();
+
+  const navigate = useNavigate();
 
   const columns: ColumnsType<LoanType> = useMemo(
     () => [
@@ -134,7 +138,16 @@ const Loan = () => {
           </Button>
         </LimiteSizeButton>
       </BoxButtons>
-      <Table columns={columns} dataSource={loansFiltered} />
+      <Table
+        // onRow={(record) => ({
+        //   onClick: () => navigate(`${LoanRoutesEnum.LOAN_ID}/${record.id}`),
+        // })}
+        onRow={(record) => ({
+          onDoubleClick: () => navigate(`${LoanRoutesEnum.LOAN_DETAIL}/${record.id}`),
+        })}
+        columns={columns}
+        dataSource={loansFiltered}
+      />
     </Screen>
   );
 };

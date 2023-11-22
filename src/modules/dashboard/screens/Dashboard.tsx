@@ -4,12 +4,14 @@ import Search from 'antd/es/input/Search';
 import { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
 import { ScreenContainer2 } from '../../../shared/components/screen/screen.style';
 import Table from '../../../shared/components/table/Table';
 import { useLoan } from '../../loan/hooks/useLoan';
+import { LoanRoutesEnum } from '../../loan/routes';
 import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../../loan/styles/loan.style';
 import { LoanType } from '../../loan/types/LoanType';
 import dashboardPDF from '../reports/dashboardReport';
@@ -22,6 +24,8 @@ const Dashboard = () => {
   const quantVencido = loansFiltered.filter((p) => p.status === 'Vencido');
 
   const today = moment();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     loansFiltered.filter((p) => {
@@ -134,6 +138,9 @@ const Dashboard = () => {
       </BoxButtons>
       <Table
         columns={columns}
+        onRow={(record) => ({
+          onDoubleClick: () => navigate(`${LoanRoutesEnum.LOAN_DETAIL}/${record.id}`),
+        })}
         dataSource={[
           ...loansFiltered.filter((loan) => loan.status.includes('Vencido')),
           ...loansFiltered.filter((loan) => loan.status.includes('Pendente')),

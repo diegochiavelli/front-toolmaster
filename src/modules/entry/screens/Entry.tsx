@@ -6,11 +6,11 @@ import { useMemo } from 'react';
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
 import Table from '../../../shared/components/table/Table';
+import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { useEntry } from '../hooks/useEntry';
+import entryPDF from '../reports/entryReport';
 import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../styles/entry.style';
 import { EntryType } from '../types/EntryType';
-import { DashboardRoutesEnum } from '../../dashboard/routes';
-import entryPDF from '../reports/entryReport';
 
 const { Search } = Input;
 

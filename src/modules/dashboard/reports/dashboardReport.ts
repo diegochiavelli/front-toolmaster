@@ -7,7 +7,8 @@ import { LoanType } from '../../loan/types/LoanType';
 
 function dashboardPDF(loansFiltered: LoanType[]) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
+  // ...loansFiltered.filter((loan) => loan.status.includes('Vencido')),
+  // ...loansFiltered.filter((loan) => loan.status.includes('Pendente')),
   const dados = loansFiltered.map((e) => {
     return [
       { text: e.id, fontSize: 9, margin: [0, 2, 0, 2] },

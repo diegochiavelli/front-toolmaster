@@ -31,8 +31,9 @@ export const useExite = () => {
     if (!value) {
       setExitesFiltered([...exites]);
     } else {
-      setExitesFiltered([...exitesFiltered.filter((exite) => exite.id.toString().includes(value)),
-        ...exitesFiltered.filter((exite) => exite.id_equipamento.toString().includes(value))
+      setExitesFiltered([
+        ...exitesFiltered.filter((exite) => exite.id.toString().includes(value)),
+        ...exitesFiltered.filter((exite) => exite.id_equipamento.toString().includes(value)),
       ]);
     }
   };
