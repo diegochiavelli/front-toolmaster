@@ -30,5 +30,3 @@ export const TagColumn = ({ category, status }: TagColumnProps) => {
 
   return <Tag color={currentColor}>{status}</Tag>;
 };
-
-

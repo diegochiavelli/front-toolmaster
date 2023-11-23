@@ -41,7 +41,7 @@ const LoginScreen = () => {
           <TitleLogin level={2} type="secondary">
             LOGIN
           </TitleLogin>
-          <Input title="USUÁRIO" margin="32px 0px 0px" onChange={handleEmail} value={email} />
+          <Input title="E-MAIL" margin="32px 0px 0px" onChange={handleEmail} value={email} />
           <Input
             type="password"
             title="SENHA"

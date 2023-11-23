@@ -15,12 +15,12 @@ import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
 import { ScreenContainer2 } from '../../../shared/components/screen/screen.style';
 import Table from '../../../shared/components/table/Table';
+import { convertStatusToNumber, TagColumn } from '../../loan/components/TagStatusColumn';
 import { useLoan } from '../../loan/hooks/useLoan';
 import { LoanRoutesEnum } from '../../loan/routes';
 import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../../loan/styles/loan.style';
 import { LoanType } from '../../loan/types/LoanType';
 import dashboardPDF from '../reports/dashboardReport';
-import { TagColumn, convertStatusToNumber } from '../../loan/components/CategoryColumn';
 
 const Dashboard = () => {
   const { loansFiltered, handleChangeStatusLoan, handleChangeStatusVencidoLoan, onSearch } =

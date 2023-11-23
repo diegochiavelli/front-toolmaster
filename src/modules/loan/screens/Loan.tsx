@@ -9,7 +9,7 @@ import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
 import Table from '../../../shared/components/table/Table';
 import { DashboardRoutesEnum } from '../../dashboard/routes';
-import { convertStatusToNumber, TagColumn } from '../components/CategoryColumn';
+import { convertStatusToNumber, TagColumn } from '../components/TagStatusColumn';
 import { useLoan } from '../hooks/useLoan';
 import loanPDF from '../reports/loanReport';
 import { LoanRoutesEnum } from '../routes';

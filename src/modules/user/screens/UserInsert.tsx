@@ -51,6 +51,7 @@ const UserInsert = () => {
             margin="0px 0px 16px 0px"
             title="E-mail"
             placeholder="Informe seu E-mail favorito"
+            disabled={isEdit ? true : false}
           />
           <Input
             type="password"
@@ -60,18 +61,6 @@ const UserInsert = () => {
             title="Senha"
             placeholder="Digite uma senha"
           />
-          {/* <Input
-            type="password"
-            onChange={() => {
-              if (user.senha != senha2){
-                alert('As senhas digitadas não coincidem! Digite novamente.');
-              }
-            }}
-            value={senha2}
-            margin="0px 0px 16px 0px"
-            title="Senha"
-            placeholder="Confirme sua senha"
-          /> */}
           <DisplayFlexJustifyRight>
             <LimitedContainer margin="0px 8px" width={120}>
               <Button danger onClick={handleOnClickCancel}>

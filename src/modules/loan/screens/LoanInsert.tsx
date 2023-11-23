@@ -45,7 +45,7 @@ const LoanInsert = () => {
     navigate(LoanRoutesEnum.LOAN);
   };
 
-  const statusSelect = ['Pendente', 'Concluído', 'Vencido', 'Cancelado'];
+  const statusSelect = ['Pendente', 'Concluído', 'Vencido'];
 
   return (
     <Screen
@@ -129,13 +129,14 @@ const LoanInsert = () => {
 
             <Select
               defaultValue={`${loan.status}`}
-              title="Status"
               margin="0px 0px 32px 0px"
               onChange={handleChangeSelectStatus}
               options={statusSelect.map((statusValores) => ({
                 value: `${statusValores}`,
                 label: `${statusValores}`,
               }))}
+              disabled
+              style={{ display: 'none' }}
             />
 
             <DisplayFlexJustifyRight>
