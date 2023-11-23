@@ -11,7 +11,6 @@ export interface LoanType {
   id_usuario: number;
   id_funcionario: number;
   emprestimo?: LoanType;
-
   item?: LoanEquipmentType[];
   equipamento?: EquipmentType[];
   colaborador?: CollaboratorType;

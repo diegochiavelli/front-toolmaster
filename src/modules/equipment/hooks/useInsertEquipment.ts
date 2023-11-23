@@ -38,8 +38,8 @@ export const useInsertEquipment = (equipmentId?: string) => {
     if (equipmentReducer) {
       setEquipment({
         nome: equipmentReducer.nome,
-        modelo: equipmentReducer.marca,
-        marca: equipmentReducer.modelo,
+        modelo: equipmentReducer.modelo,
+        marca: equipmentReducer.marca,
         quantidade: equipmentReducer.quantidade,
       });
     }

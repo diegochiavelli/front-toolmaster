@@ -32,7 +32,9 @@ export const useEquipment = () => {
       setEquipmentsFiltered([...equipments]);
     } else {
       setEquipmentsFiltered([
-        ...equipmentsFiltered.filter((equipment) => equipment.nome.includes(value)),
+        ...equipmentsFiltered.filter((equipment) =>
+          equipment.nome.toUpperCase().includes(value.toUpperCase()),
+        ),
         ...equipmentsFiltered.filter((equipment) => equipment.id.toString().includes(value)),
       ]);
     }

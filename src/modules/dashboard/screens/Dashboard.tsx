@@ -1,4 +1,9 @@
-import { CheckOutlined, FilePdfOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  ClockCircleOutlined,
+  FilePdfOutlined,
+  WarningOutlined,
+} from '@ant-design/icons';
 import { Card as CardAntd, Divider } from 'antd';
 import Search from 'antd/es/input/Search';
 import { ColumnsType } from 'antd/es/table';
@@ -15,6 +20,7 @@ import { LoanRoutesEnum } from '../../loan/routes';
 import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../../loan/styles/loan.style';
 import { LoanType } from '../../loan/types/LoanType';
 import dashboardPDF from '../reports/dashboardReport';
+import { TagColumn, convertStatusToNumber } from '../../loan/components/CategoryColumn';
 
 const Dashboard = () => {
   const { loansFiltered, handleChangeStatusLoan, handleChangeStatusVencidoLoan, onSearch } =
@@ -66,7 +72,9 @@ const Dashboard = () => {
         dataIndex: 'status',
         key: 'status',
         sorter: (a, b) => a.status.localeCompare(b.status),
-        render: (text) => <a>{text}</a>,
+        render: (_, loan) => (
+          <TagColumn category={convertStatusToNumber(loan.status)} status={loan.status} />
+        ),
       },
       {
         title: 'Colaborador',
@@ -102,26 +110,53 @@ const Dashboard = () => {
     >
       <ScreenContainer2>
         <CardAntd
-          title="Empréstimos Pendentes"
+          title={
+            <>
+              <ClockCircleOutlined
+                style={{ color: 'orange', fontSize: '17px', marginRight: '8px' }}
+              />
+              Empréstimos Pendentes
+            </>
+          }
           bordered={false}
           style={{
-            width: 300,
+            width: 270,
+            height: 130,
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            textAlign: 'center',
             marginRight: '20px',
             fontSize: '20px',
           }}
         >
-          <span>{quantPendente.length}</span>
+          <span style={{ fontSize: '20px', fontWeight: 'bold', margin: '10px' }}>
+            {quantPendente.length}
+          </span>
         </CardAntd>
-
         <CardAntd
-          title="Empréstimos Vencidos"
+          title={
+            <>
+              <WarningOutlined style={{ color: 'red', fontSize: '17px', marginRight: '8px' }} />
+              Empréstimos Vencidos
+            </>
+          }
           bordered={false}
-          style={{ width: 300, marginRight: '20px', fontSize: '20px' }}
+          style={{
+            width: 270,
+            height: 130,
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            textAlign: 'center',
+            marginRight: '20px',
+            fontSize: '20px',
+          }}
         >
-          <span>{quantVencido.length}</span>
+          <span style={{ fontSize: '20px', fontWeight: 'bold', margin: '10px' }}>
+            {quantVencido.length}
+          </span>
         </CardAntd>
       </ScreenContainer2>
-      <Divider />
+
       <BoxButtons>
         <LimiteSizeInput>
           <Search placeholder="Buscar empréstimo por ID" onSearch={onSearch} enterButton />
@@ -136,6 +171,7 @@ const Dashboard = () => {
           </Button>
         </LimiteSizeButton>
       </BoxButtons>
+      <Divider />
       <Table
         columns={columns}
         onRow={(record) => ({

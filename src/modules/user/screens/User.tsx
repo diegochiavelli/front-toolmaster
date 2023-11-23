@@ -5,7 +5,10 @@ import { useMemo } from 'react';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
+import { LimitedContainer } from '../../../shared/components/styles/limited.styled';
 import Table from '../../../shared/components/table/Table';
+import { UserTypeEnum } from '../../../shared/enums/userType.enum';
+import { getUserInfoByToken } from '../../../shared/functions/connection/auth';
 import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { useUser } from '../hooks/useUser';
 import userPDF from '../reports/userReport';
@@ -25,6 +28,8 @@ const User = () => {
     handleCloseModalDelete,
     handleOpenModalDelete,
   } = useUser();
+
+  const userToken = useMemo(() => getUserInfoByToken(), []);
 
   const columns: ColumnsType<UserType> = useMemo(
     () => [
@@ -53,16 +58,21 @@ const User = () => {
         key: 'x',
         render: (_, user) => (
           <>
-            <Button
-              margin="0px 16px 0px 0px"
-              onClick={() => handleEditUser(user.id)}
-              icon={<EditOutlined />}
-            ></Button>
-            <Button
-              danger
-              onClick={() => handleOpenModalDelete(user.id)}
-              icon={<DeleteOutlined />}
-            ></Button>
+            {userToken?.nome === UserTypeEnum.Admin && (
+              <Button
+                margin="0px 16px 0px 0px"
+                onClick={() => handleEditUser(user.id)}
+                icon={<EditOutlined />}
+              ></Button>
+            )}
+
+            {userToken?.nome === UserTypeEnum.Admin && (
+              <Button
+                danger
+                onClick={() => handleOpenModalDelete(user.id)}
+                icon={<DeleteOutlined />}
+              ></Button>
+            )}
           </>
         ),
       },
@@ -101,11 +111,13 @@ const User = () => {
             Gerar PDF
           </Button>
         </LimiteSizeButton>
-        <LimiteSizeButton>
-          <Button type="primary" onClick={handleOnClickInsert}>
-            Adicionar
-          </Button>
-        </LimiteSizeButton>
+        <LimitedContainer width={180}>
+          {userToken?.nome === UserTypeEnum.Admin && (
+            <Button type="primary" onClick={handleOnClickInsert}>
+              Adicionar
+            </Button>
+          )}
+        </LimitedContainer>
       </BoxButtons>
       <Table columns={columns} dataSource={usersFiltered} />
     </Screen>

@@ -2,9 +2,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Input from '../../../shared/components/inputs/input/Input';
+import Loading from '../../../shared/components/loading/Loading';
 import Screen from '../../../shared/components/screen/Screen';
 import Select from '../../../shared/components/selects/select/Select';
-import { DisplayFlexJustifyRight } from '../../../shared/components/styles/display.styled';
+import {
+  DisplayFlexJustifyCenter,
+  DisplayFlexJustifyRight,
+} from '../../../shared/components/styles/display.styled';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styled';
 import { useCollaborator } from '../../collaborator/hooks/useCollaborator';
 import { CollaboratorType } from '../../collaborator/types/CollaboratorType';
@@ -22,6 +26,7 @@ const LoanInsert = () => {
     loan,
     loanEquipment,
     loading,
+    loadingRequest,
     disabledButton,
     onChangeInput,
     onChangeInputLoanEquipment,
@@ -34,14 +39,13 @@ const LoanInsert = () => {
 
   const { collaboratorsFiltered } = useCollaborator();
   const { equipmentsFiltered } = useEquipment();
-
   const navigate = useNavigate();
 
   const handleOnClickCancel = () => {
     navigate(LoanRoutesEnum.LOAN);
   };
 
-  const statusSelect = ['Pendente', 'Concluído', 'Vencido']; // COLOCAR O VENCIDO DINÂMICO
+  const statusSelect = ['Pendente', 'Concluído', 'Vencido', 'Cancelado'];
 
   return (
     <Screen
@@ -59,91 +63,101 @@ const LoanInsert = () => {
         },
       ]}
     >
-      <LoanInsertContainer>
-        <LimitedContainer width={400}>
-          <Select
-            title="Equipamento"
-            margin="0px 0px 16px 0px"
-            onChange={handleChangeSelectEquipment}
-            options={equipmentsFiltered.map((e: EquipmentType) => ({
-              value: `${e.id}`,
-              label: `${e.id} - ${e.nome}`,
-            }))}
-          />
+      {loadingRequest ? (
+        <DisplayFlexJustifyCenter>
+          <Loading size="large" />
+        </DisplayFlexJustifyCenter>
+      ) : (
+        <LoanInsertContainer>
+          <LimitedContainer width={400}>
+            <Select
+              defaultValue={`${loanEquipment.id_equipamento}`}
+              title="Equipamento"
+              margin="0px 0px 16px 0px"
+              onChange={handleChangeSelectEquipment}
+              options={equipmentsFiltered.map((e: EquipmentType) => ({
+                value: `${e.id}`,
+                label: `${e.id} - ${e.nome}`,
+              }))}
+              disabled={isEdit ? true : false}
+            />
 
-          <Input
-            type="number"
-            margin="0px 0px 16px 0px"
-            onChange={(event) => onChangeInputLoanEquipment(event, 'quantidade')}
-            value={loanEquipment.quantidade}
-            title="Quantidade"
-            placeholder="Quantidade do equipamento para empréstimo"
-          />
+            <Input
+              type="number"
+              margin="0px 0px 16px 0px"
+              onChange={(event) => onChangeInputLoanEquipment(event, 'quantidade')}
+              value={loanEquipment.quantidade}
+              title="Quantidade"
+              placeholder="Quantidade do equipamento para empréstimo"
+              disabled={isEdit ? true : false}
+            />
 
-          <Input
-            type="date"
-            onChange={(event) => onChangeInput(event, 'dataSaida')}
-            value={loan.dataSaida}
-            margin="0px 0px 16px 0px"
-            title="Data saída"
-          />
+            <Input
+              type="date"
+              onChange={(event) => onChangeInput(event, 'dataSaida')}
+              value={loan.dataSaida}
+              margin="0px 0px 16px 0px"
+              title="Data saída"
+            />
 
-          <Input
-            type="date"
-            onChange={(event) => onChangeInput(event, 'dataDevolucao')}
-            value={loan.dataDevolucao}
-            margin="0px 0px 16px 0px"
-            title="Data devolução"
-          />
+            <Input
+              type="date"
+              onChange={(event) => onChangeInput(event, 'dataDevolucao')}
+              value={loan.dataDevolucao}
+              margin="0px 0px 16px 0px"
+              title="Data devolução"
+            />
 
-          <Input
-            onChange={(event) => onChangeInput(event, 'observacao')}
-            value={loan.observacao}
-            margin="0px 0px 16px 0px"
-            title="Observações"
-            placeholder="Informações úteis"
-          />
+            <Input
+              onChange={(event) => onChangeInput(event, 'observacao')}
+              value={loan.observacao}
+              margin="0px 0px 16px 0px"
+              title="Observações"
+              placeholder="Informações úteis"
+            />
 
-          <Select
-            title="ID Colaborador"
-            margin="0px 0px 16px 0px"
-            onChange={handleChangeSelectCollaborator}
-            options={collaboratorsFiltered.map((e: CollaboratorType) => ({
-              value: `${e.id}`,
-              label: `${e.id} - ${e.nome}`,
-            }))}
-          />
+            <Select
+              defaultValue={`${loan.id_funcionario}`}
+              title="ID Colaborador"
+              margin="0px 0px 16px 0px"
+              onChange={handleChangeSelectCollaborator}
+              options={collaboratorsFiltered.map((e: CollaboratorType) => ({
+                value: `${e.id}`,
+                label: `${e.id} - ${e.nome}`,
+              }))}
+            />
 
-          <Select
-            defaultValue={`${loan.status}`}
-            title="Status"
-            margin="0px 0px 32px 0px"
-            onChange={handleChangeSelectStatus}
-            options={statusSelect.map((statusValores) => ({
-              value: `${statusValores}`,
-              label: `${statusValores}`,
-            }))}
-          />
+            <Select
+              defaultValue={`${loan.status}`}
+              title="Status"
+              margin="0px 0px 32px 0px"
+              onChange={handleChangeSelectStatus}
+              options={statusSelect.map((statusValores) => ({
+                value: `${statusValores}`,
+                label: `${statusValores}`,
+              }))}
+            />
 
-          <DisplayFlexJustifyRight>
-            <LimitedContainer margin="0px 8px" width={120}>
-              <Button danger onClick={handleOnClickCancel}>
-                Cancelar
-              </Button>
-            </LimitedContainer>
-            <LimitedContainer width={120}>
-              <Button
-                loading={loading}
-                disabled={disabledButton}
-                onClick={handleInsertLoan}
-                type="primary"
-              >
-                {isEdit ? 'Salvar' : 'Adicionar'}
-              </Button>
-            </LimitedContainer>
-          </DisplayFlexJustifyRight>
-        </LimitedContainer>
-      </LoanInsertContainer>
+            <DisplayFlexJustifyRight>
+              <LimitedContainer margin="0px 8px" width={120}>
+                <Button danger onClick={handleOnClickCancel}>
+                  Cancelar
+                </Button>
+              </LimitedContainer>
+              <LimitedContainer width={120}>
+                <Button
+                  loading={loading}
+                  disabled={disabledButton}
+                  onClick={handleInsertLoan}
+                  type="primary"
+                >
+                  {isEdit ? 'Salvar' : 'Adicionar'}
+                </Button>
+              </LimitedContainer>
+            </DisplayFlexJustifyRight>
+          </LimitedContainer>
+        </LoanInsertContainer>
+      )}
     </Screen>
   );
 };

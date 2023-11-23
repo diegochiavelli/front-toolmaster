@@ -18,7 +18,7 @@ function loanPDF(loansFiltered: LoanType[]) {
       { text: e.id_funcionario, fontSize: 9, margin: [0, 2, 0, 2] },
     ];
   });
-  
+
   const details = [
     {
       layout: 'lightHorizontalLines',

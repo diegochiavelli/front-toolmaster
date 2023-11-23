@@ -32,7 +32,7 @@ export const useUser = () => {
       setUsersFiltered([...users]);
     } else {
       setUsersFiltered([
-        ...usersFiltered.filter((user) => user.nome.includes(value)),
+        ...usersFiltered.filter((user) => user.nome.toUpperCase().includes(value.toUpperCase())),
         ...usersFiltered.filter((user) => user.id.toString().includes(value)),
       ]);
     }

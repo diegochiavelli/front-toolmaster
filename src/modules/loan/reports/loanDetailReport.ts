@@ -108,8 +108,6 @@ function loanDetailPDF(loan: LoanType[]) {
     },
   ];
 
-
-
   const dadosColaborador = loan.map((g) => {
     return [
       { text: g.colaborador?.id, fontSize: 9, margin: [0, 2, 0, 2] },

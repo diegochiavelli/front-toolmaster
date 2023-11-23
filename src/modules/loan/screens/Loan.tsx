@@ -9,6 +9,7 @@ import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
 import Table from '../../../shared/components/table/Table';
 import { DashboardRoutesEnum } from '../../dashboard/routes';
+import { convertStatusToNumber, TagColumn } from '../components/CategoryColumn';
 import { useLoan } from '../hooks/useLoan';
 import loanPDF from '../reports/loanReport';
 import { LoanRoutesEnum } from '../routes';
@@ -59,7 +60,9 @@ const Loan = () => {
         dataIndex: 'status',
         key: 'status',
         sorter: (a, b) => a.status.localeCompare(b.status),
-        render: (text) => <a>{text}</a>,
+        render: (_, loan) => (
+          <TagColumn category={convertStatusToNumber(loan.status)} status={loan.status} />
+        ),
       },
       {
         title: 'Observação',
@@ -139,9 +142,6 @@ const Loan = () => {
         </LimiteSizeButton>
       </BoxButtons>
       <Table
-        // onRow={(record) => ({
-        //   onClick: () => navigate(`${LoanRoutesEnum.LOAN_ID}/${record.id}`),
-        // })}
         onRow={(record) => ({
           onDoubleClick: () => navigate(`${LoanRoutesEnum.LOAN_DETAIL}/${record.id}`),
         })}

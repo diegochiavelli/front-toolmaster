@@ -1,3 +1,4 @@
+import { ToolOutlined } from '@ant-design/icons';
 import { Breadcrumb as BreadcrumbAntd } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +23,9 @@ const Breadcrumb = ({ listBreadcrumb }: BreadcrumProps) => {
       {listBreadcrumb.map((breadcrumb, index) => (
         <BreadcrumbAntd.Item key={`breadcrumb_${index}`}>
           {breadcrumb.navigateTo ? (
-            <a onClick={() => handleGoToCLick(breadcrumb.navigateTo || '')}>{breadcrumb.name}</a>
+            <a onClick={() => handleGoToCLick(breadcrumb.navigateTo || '')}>
+              <ToolOutlined /> {breadcrumb.name}
+            </a>
           ) : (
             breadcrumb.name
           )}

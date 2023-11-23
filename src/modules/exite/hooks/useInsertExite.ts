@@ -17,7 +17,7 @@ const DEFAULT_EXITE = {
 
 export const useInsertExite = (exiteId?: string) => {
   const navigate = useNavigate();
-  const { request } = useRequests();
+  const { request, loading: loadingRequest } = useRequests();
   const { exite: exiteReducer, setExite: setExiteReducer } = useExiteReducer();
   const [loading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -85,6 +85,7 @@ export const useInsertExite = (exiteId?: string) => {
   return {
     exite,
     loading,
+    loadingRequest,
     disabledButton,
     isEdit,
     onChangeInput,

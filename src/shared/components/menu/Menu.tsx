@@ -87,7 +87,7 @@ const Menu = () => {
       <MenuAntd
         theme="dark"
         onClick={onClick}
-        style={{ width: 240 }}
+        style={{ width: 200 }}
         defaultOpenKeys={['sub1']}
         selectedKeys={[current]}
         mode="inline"

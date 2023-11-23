@@ -2,14 +2,13 @@ import styled from 'styled-components';
 
 export const ScreenContainer = styled.div`
   background-color: white;
-  padding: 32px;
-  margin: 32px;
-  width: calc(100% - 368px);
+  padding: 15px;
+  margin: 15px;
+  width: calc(100% - 265px);
   margin-left: auto;
 `;
 
 export const ScreenContainer2 = styled.div`
-  background-color: #fafafa;
   padding: 5px;
   margin: 5px;
   display: flex;

@@ -7,19 +7,6 @@ import { LoanType } from '../../loan/types/LoanType';
 
 function dashboardPDF(loansFiltered: LoanType[]) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-  // ...loansFiltered.filter((loan) => loan.status.includes('Vencido')),
-  // ...loansFiltered.filter((loan) => loan.status.includes('Pendente')),
-  // const dados = loansFiltered.map((e) => {
-  //   if (e.status == 'Concluído') {
-  //     return [
-  //       { text: e.id, fontSize: 9, margin: [0, 2, 0, 2] },
-  //       { text: moment(e.dataSaida).format('DD-MM-YYYY'), fontSize: 9, margin: [0, 2, 0, 2] },
-  //       { text: moment(e.dataDevolucao).format('DD-MM-YYYY'), fontSize: 9, margin: [0, 2, 0, 2] },
-  //       { text: e.status, fontSize: 9, margin: [0, 2, 0, 2] },
-  //       { text: e.id_funcionario, fontSize: 9, margin: [0, 2, 0, 2] },
-  //     ];
-  //   }
-  // });
 
   const dados = loansFiltered
     .filter((e) => e.status != 'Concluído')

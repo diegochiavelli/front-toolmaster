@@ -32,7 +32,9 @@ export const useCollaborator = () => {
       setCollaboratorsFiltered([...collaborators]);
     } else {
       setCollaboratorsFiltered([
-        ...collaboratorsFiltered.filter((collaborator) => collaborator.nome.includes(value)),
+        ...collaboratorsFiltered.filter((collaborator) =>
+          collaborator.nome.toUpperCase().includes(value.toUpperCase()),
+        ),
         ...collaboratorsFiltered.filter((collaborator) =>
           collaborator.id.toString().includes(value),
         ),

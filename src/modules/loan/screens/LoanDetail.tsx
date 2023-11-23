@@ -103,29 +103,18 @@ const LoanDetail = () => {
 
       <Divider />
       <BoxButtons2>
-        {loan?.emprestimo && loan?.emprestimo.status == 'Pendente' && (
-          <LimiteSizeButton>
-            <Button
-              margin="0px 16px 0px 0px"
-              onClick={() => handleChangeStatusLoan(loan?.emprestimo?.id ?? 0)}
-              icon={<CheckOutlined />}
-            >
-              Concluir
-            </Button>
-          </LimiteSizeButton>
-        )}
-
-        {loan?.emprestimo && loan?.emprestimo.status == 'Vencido' && (
-          <LimiteSizeButton>
-            <Button
-              margin="0px 16px 0px 0px"
-              onClick={() => handleChangeStatusLoan(loan?.emprestimo?.id ?? 0)}
-              icon={<CheckOutlined />}
-            >
-              Concluir
-            </Button>
-          </LimiteSizeButton>
-        )}
+        {loan?.emprestimo &&
+          (loan?.emprestimo.status === 'Pendente' || loan?.emprestimo.status === 'Vencido') && (
+            <LimiteSizeButton>
+              <Button
+                margin="0px 16px 0px 0px"
+                onClick={() => handleChangeStatusLoan(loan?.emprestimo?.id ?? 0)}
+                icon={<CheckOutlined />}
+              >
+                Concluir
+              </Button>
+            </LimiteSizeButton>
+          )}
 
         <LimiteSizeButton>
           <Button

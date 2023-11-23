@@ -2,9 +2,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Input from '../../../shared/components/inputs/input/Input';
+import Loading from '../../../shared/components/loading/Loading';
 import Screen from '../../../shared/components/screen/Screen';
 import Select from '../../../shared/components/selects/select/Select';
-import { DisplayFlexJustifyRight } from '../../../shared/components/styles/display.styled';
+import {
+  DisplayFlexJustifyCenter,
+  DisplayFlexJustifyRight,
+} from '../../../shared/components/styles/display.styled';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styled';
 import { DashboardRoutesEnum } from '../../dashboard/routes';
 import { useEquipment } from '../../equipment/hooks/useEquipment';
@@ -18,6 +22,7 @@ const EntryInsert = () => {
   const {
     entry,
     loading,
+    loadingRequest,
     disabledButton,
     isEdit,
     onChangeInput,
@@ -47,59 +52,69 @@ const EntryInsert = () => {
         },
       ]}
     >
-      <EntryInsertContainer>
-        <LimitedContainer width={400}>
-          <Select
-            title="Equipamento"
-            margin="0px 0px 16px 0px"
-            onChange={handleChangeSelectEquipment}
-            options={equipmentsFiltered.map((e: EquipmentType) => ({
-              value: `${e.id}`,
-              label: `${e.id} - ${e.nome}`,
-            }))}
-          />
+      {loadingRequest ? (
+        <DisplayFlexJustifyCenter>
+          <Loading size="large" />
+        </DisplayFlexJustifyCenter>
+      ) : (
+        <EntryInsertContainer>
+          <LimitedContainer width={400}>
+            <Select
+              defaultValue={`${entry.id_equipamento}`}
+              title="Equipamento"
+              margin="0px 0px 16px 0px"
+              onChange={handleChangeSelectEquipment}
+              options={equipmentsFiltered.map((e: EquipmentType) => ({
+                value: `${e.id}`,
+                label: `${e.id} - ${e.nome}`,
+              }))}
+              disabled={isEdit ? true : false}
+            />
 
-          <Input
-            type="number"
-            onChange={(event) => onChangeInput(event, 'quantidade')}
-            value={entry.quantidade}
-            margin="0px 0px 16px 0px"
-            title="Quantidade"
-            placeholder="Quantidade"
-          />
-          <Input
-            onChange={(event) => onChangeInput(event, 'preco')}
-            value={entry.preco}
-            margin="0px 0px 16px 0px"
-            title="Preço"
-            placeholder="Preço"
-          />
-          <Input
-            onChange={(event) => onChangeInput(event, 'observacao')}
-            value={entry.observacao}
-            margin="0px 0px 16px 0px"
-            title="Observação"
-            placeholder="Observação"
-          />
-          <DisplayFlexJustifyRight>
-            <LimitedContainer margin="0px 8px" width={120}>
-              <Button danger onClick={handleOnClickCancel}>
-                Cancelar
-              </Button>
-            </LimitedContainer>
-            <LimitedContainer width={120}>
-              <Button
-                loading={loading}
-                disabled={disabledButton}
-                onClick={handleInsertEntry}
-                type="primary"
-              >
-                {isEdit ? 'Salvar' : 'Adicionar'}
-              </Button>
-            </LimitedContainer>
-          </DisplayFlexJustifyRight>
-        </LimitedContainer>
-      </EntryInsertContainer>
+            <Input
+              type="number"
+              onChange={(event) => onChangeInput(event, 'quantidade')}
+              value={entry.quantidade}
+              margin="0px 0px 16px 0px"
+              title="Quantidade"
+              placeholder="Quantidade"
+              disabled={isEdit ? true : false}
+            />
+            <Input
+              type="number"
+              onChange={(event) => onChangeInput(event, 'preco')}
+              value={entry.preco}
+              margin="0px 0px 16px 0px"
+              title="Preço"
+              placeholder="Preço"
+            />
+            <Input
+              onChange={(event) => onChangeInput(event, 'observacao')}
+              value={entry.observacao}
+              margin="0px 0px 16px 0px"
+              title="Observação"
+              placeholder="Observação"
+            />
+            <DisplayFlexJustifyRight>
+              <LimitedContainer margin="0px 8px" width={120}>
+                <Button danger onClick={handleOnClickCancel}>
+                  Cancelar
+                </Button>
+              </LimitedContainer>
+              <LimitedContainer width={120}>
+                <Button
+                  loading={loading}
+                  disabled={disabledButton}
+                  onClick={handleInsertEntry}
+                  type="primary"
+                >
+                  {isEdit ? 'Salvar' : 'Adicionar'}
+                </Button>
+              </LimitedContainer>
+            </DisplayFlexJustifyRight>
+          </LimitedContainer>
+        </EntryInsertContainer>
+      )}
     </Screen>
   );
 };

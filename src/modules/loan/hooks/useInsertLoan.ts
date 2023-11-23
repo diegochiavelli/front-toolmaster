@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { URL_LOAN, URL_LOAN_EQUIPMENT, URL_LOAN_ID } from '../../../shared/constants/urls';
+import {
+  URL_LOAN,
+  URL_LOAN_EQUIPMENT,
+  URL_LOAN_EQUIPMENT_ID,
+  URL_LOAN_ID,
+  URL_LOANEQUIPMENT_ID,
+} from '../../../shared/constants/urls';
 import { InsertLoan } from '../../../shared/dtos/InsertLoan.dto';
 import { InsertLoanEquipment } from '../../../shared/dtos/InsertLoanEquipment.dto';
 import { MethodsEnum } from '../../../shared/enums/methods.enum';
@@ -15,7 +21,7 @@ const DEFAULT_LOAN = {
   dataSaida: '',
   dataDevolucao: '',
   observacao: '',
-  status: '',
+  status: 'Pendente',
   id_usuario: 1,
   id_funcionario: 0,
 };
@@ -28,14 +34,15 @@ const DEFAULT_LOANEQUIPMENT = {
 
 export const useInsertLoan = (loanId?: string) => {
   const navigate = useNavigate();
-  const { request } = useRequests();
+  const { request, loading: loadingRequest } = useRequests();
 
-  const [loading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [loading] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
 
   const { loan: loanReducer, setLoan: setLoanReducer } = useLoanReducer();
-  const { loanEquipment: loanEquipmentReducer } = useLoanEquipmentReducer();
+  const { loanEquipment: loanEquipmentReducer, setLoanEquipment: setLoanEquipmentReducer } =
+    useLoanEquipmentReducer();
 
   const [loan, setLoan] = useState<InsertLoan>(DEFAULT_LOAN);
   const [loanEquipment, setLoanEquipment] = useState<InsertLoanEquipment>(DEFAULT_LOANEQUIPMENT);
@@ -68,7 +75,6 @@ export const useInsertLoan = (loanId?: string) => {
     }
   }, [loanReducer]);
 
-  //EMPEQUIPAMENTO
   useEffect(() => {
     if (loanEquipmentReducer) {
       setLoanEquipment({
@@ -83,7 +89,11 @@ export const useInsertLoan = (loanId?: string) => {
     if (loanId) {
       setIsEdit(true);
       request(URL_LOAN_ID.replace('{emprestimosId}', loanId), MethodsEnum.GET, setLoanReducer);
-      // request(URL_LOAN_EQUIPMENT_ID.replace('{emprestimosId}', loanId), MethodsEnum.GET, setLoanReducer);
+      request(
+        URL_LOANEQUIPMENT_ID.replace('{emprestimosId}', loanId),
+        MethodsEnum.GET,
+        setLoanEquipmentReducer,
+      );
     } else {
       setLoanReducer(undefined);
       setLoan(DEFAULT_LOAN);
@@ -136,15 +146,14 @@ export const useInsertLoan = (loanId?: string) => {
         MethodsEnum.PUT,
         undefined,
         loan,
+      );
+      await request(
+        URL_LOAN_EQUIPMENT_ID.replace('{emprestimosId}', loanId),
+        MethodsEnum.PUT,
+        undefined,
+        loanEquipment,
         'Empréstimo modificado!',
       );
-      // await request(
-      //   URL_LOAN_EQUIPMENT_ID.replace('{emprestimosId}', loanId),
-      //   MethodsEnum.PUT,
-      //   undefined,
-      //   loan,
-      //   'Empréstimo modificado!',
-      // );
     } else {
       const loanEquipmentBd = <LoanType>await request(URL_LOAN, MethodsEnum.POST, undefined, loan);
 
@@ -167,6 +176,7 @@ export const useInsertLoan = (loanId?: string) => {
     loan,
     loanEquipment,
     loading,
+    loadingRequest,
     disabledButton,
     isEdit,
     onChangeInput,

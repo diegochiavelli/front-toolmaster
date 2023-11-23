@@ -13,12 +13,12 @@ const DEFAULT_ENTRY = {
   preco: 0,
   observacao: '',
   id_usuario: 1,
-  id_equipamento: 1,
+  id_equipamento: 0,
 };
 
 export const useInsertEntry = (entryId?: string) => {
   const navigate = useNavigate();
-  const { request } = useRequests();
+  const { request, loading: loadingRequest } = useRequests();
   const { entry: entryReducer, setEntry: setEntryReducer } = useEntryReducer();
   const [loading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -87,6 +87,7 @@ export const useInsertEntry = (entryId?: string) => {
   return {
     entry,
     loading,
+    loadingRequest,
     disabledButton,
     isEdit,
     onChangeInput,
